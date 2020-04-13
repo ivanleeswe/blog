@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { fetchPosts } from '../actions'
+import UserHeader from './UserHeader'
 
 class PostList extends React.Component {
   componentDidMount() {
@@ -13,10 +14,11 @@ class PostList extends React.Component {
         <div className="item" key={post.id}>
           <i className="large middle aligned icon user" />
           <div className="content">
-            <div className="description">
-              <h2>{post.title}</h2>
-              <p>{post.body}</p>
+            <div className="description" style={{lineHeight: '1'}}>
+              <h2 style={{lineHeight: '1'}}>{post.title}</h2>
+              <p style={{lineHeight: '1'}}>{post.body}</p>
             </div>
+            <UserHeader userId={post.userId}/>
           </div>
         </div>
       )
@@ -24,7 +26,7 @@ class PostList extends React.Component {
   }
 
   render () {
-    return <div className="ui relaxed divvided list">{this.renderList()}</div>;
+    return <div className="ui relaxed divided list">{this.renderList()}</div>;
   }
 }
 //anytime we want to get data from redux side to react, need mapstatetoprops func to connect

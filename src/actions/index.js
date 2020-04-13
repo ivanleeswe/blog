@@ -6,6 +6,12 @@ export const fetchPosts = () => async dispatch => { //defining a func that is go
   dispatch({ type: 'FETCH_POSTS', payload: response.data})
 }
 
+export const fetchUser = id => async dispatch => { //gets an object with user info
+  const response = await jsonPlaceholder.get(`/users/${id}`);
+
+  dispatch({ type: 'FETCH_USER', payload: response.data})
+}
+
 //Wrong
 // export const fetchPosts = async () => {
 //   const response = await jsonPlaceholder.get('/posts')

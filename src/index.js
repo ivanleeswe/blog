@@ -17,4 +17,5 @@ ReactDOM.render(
 );
 
 //index.js, App.js, reducers index.js,postlist,  actions index.js, postlist componentdidmount, api,action inddex async wait,
-//thunk applymiddleware in index.js/src--hooking up middleware to redux store, postreducer, postlist,
+//thunk applymiddleware in index.js/src--hooking up middleware to redux store, postreducer, postlist, renderlist, fetchuser action reducer,
+//Userheader,
