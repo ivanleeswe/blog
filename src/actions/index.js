@@ -1,4 +1,19 @@
+import _ from 'lodash';
 import jsonPlaceholder from '../apis/jsonPlaceholder';
+
+export const fetchPostsAndUsers = () => async (dispatch, getState) => {
+  await dispatch(fetchPosts()); //invokes fetchPosts func, return inner func line 11// remember to dispatch // async request to get post//we put await because make sure api request to complete before moving on
+  // const userIds = _.uniq(_.map(getState().posts, 'userId')); //get list of posts // map through to pull out userId props// uniq return arr with uniq user Ids
+  // userIds.forEach(id => dispatch(fetchUser(id)))//iterate over list of Ids, for every id, call fetchUser action creator// no need to await bc we dont care about waiting for each user to be fetched
+
+  //quick refactor of lines 6-7 using _.chain// uncomment 6-7 works too
+  _.chain(getState().posts)
+    .map('userId')
+    .uniq()
+    .forEach(id => dispatch(fetchUser(id)))
+    .value() //must have with chain
+
+}
 
 export const fetchPosts = () => async dispatch => { //defining a func that is going to return a func
   const response = await jsonPlaceholder.get('/posts')
@@ -11,6 +26,14 @@ export const fetchUser = id => async dispatch => { //gets an object with user in
 
   dispatch({ type: 'FETCH_USER', payload: response.data})
 }
+
+//Solution 1- MEMOIZING- call this action creator only one time with each unique user id -(get it once and it wont fetch for it again)( CON: but if you need to change anything about this user, you will need to create a new action without memoize)(Pro: less code change needed)
+//
+// export const fetchUser = id => dispatch => _fetchUser(id, dispatch);
+// const _fetchUser = _.memoize(async (id, dispatch) => {
+//   const response = await jsonPlaceholder.get(`/users/${id}`);
+//   dispatch({ type: 'FETCH_USER', payload: response.data})
+// }
 
 //Wrong
 // export const fetchPosts = async () => {
